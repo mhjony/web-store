@@ -30,13 +30,29 @@ if ($_GET['page'] == "apple")
     $page = "items/items.php";
 }
 
-if ($_GET['page'] == "login")
+if ($_GET['page'] == "new_user")
 {
     $page = "user/createuser.php";
 }
 
 if ($_GET['page'] == "login") {
-	$page = "application/authorization/login.php";
+	$page = "user/login.php";
+}
+
+if ($_GET['page'] == "userHome") {
+	$page = "user/userHome.php";
+}
+
+if ($_GET['page'] == "userLogout") {
+	$page = "user/userLogout.php";
+}
+
+if ($_GET['page'] == "userDel") {
+	$page = "user/userDel.php";
+}
+
+if ($_GET['page'] == "alogin") {
+	$page = "admin/adminLogin.php";
 }
 
 if ($_GET['page'] == "modif") {
@@ -45,6 +61,11 @@ if ($_GET['page'] == "modif") {
 
 if ($_GET['page'] == "logout") {
 	$page = "application/authorization/logout.php";
+}
+
+if ($_GET['page'] == "cart")
+{
+    $page = "items/cart.php";
 }
 
 $conn = mysqli_connect("localhost", "root", "123456", "rush00");
@@ -71,7 +92,7 @@ if (mysqli_connect_errno()){
 	<body>
 		<div id="header">
 			<ul>
-                <li><a href="index.php?page=home">Home</a></li>
+                <!-- <li><a href="index.php?page=home">Home</a></li>-->
                 <li><a href="index.php?page=all">Category</a>
 					<ul>
 						<li><a href="index.php?page=apple">Apple</a></li>
@@ -81,21 +102,18 @@ if (mysqli_connect_errno()){
 					</ul>
 				</li>
                 <li><a href="index.php?page=contact">Contact us</a></li>
-                <li><a href="#">Cart</a></li>
-				<?php
-                    if ($_SESSION['loggued_on_user'] == "") {
-                        echo "<li><a href=\"index.php?page=login\">Login</a></li>";
-                    } else {
-                        echo "<li><a href=\"index.php?page=modif\">".$_SESSION['loggued_on_user']."</a></li>";
-                        echo "<li><a href=\"index.php?page=logout\">LogOut</a></li>";
-                    }
-                ?>
-				<li><a href="#">Login</a>
+                <li><a href="index.php?page=cart">Cart</a></li>
+				<li><a href="#">User</a>
 					<ul>
 						<li><a href="index.php?page=login">User Login</a></li>
-						<li><a href="#">Admin Login</a>
-					</ul>
-				</li>
+						<li><a href="index.php?page=alogin">Admin Login</a></li>
+						<li><a href="index.php?page=new_user">Create User</a>
+						<?php
+					if (isset($_SESSION['user']) AND $_SESSION['user']['name'] != NULL AND $_SESSION['user']['name'] != "") {
+                        echo "<li><a href=\"index.php?page=userHome\">".$_SESSION['user']['name']."</a></li>";
+                        echo "<li><a href=\"index.php?page=userLogout\">Logout</a></li>";
+                    }
+                ?>
 			</ul>
         </div>
         <div class="container">
